@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from boards.utils import get_ip
+from tasks.forms import TaskForm
 
 from .models import Board
 
@@ -35,4 +36,5 @@ def create_board(request):
 
 def view_board(request, slug):
     board = get_object_or_404(Board, slug=slug)
-    return render(request, "view_board.html", {"board": board})
+    form = TaskForm()
+    return render(request, "view_board.html", {"board": board, "form": form})

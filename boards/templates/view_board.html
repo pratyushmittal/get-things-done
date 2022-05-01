@@ -5,7 +5,7 @@
 {% block content %}
 <h1>Tasks</h1>
 
-<form action="">
+<form action="{% url 'boards:tasks:add' board_slug=board.slug %}" method="post">
   {% csrf_token %}
   {{ form }}
   <button type="submit">Add Task</button>
