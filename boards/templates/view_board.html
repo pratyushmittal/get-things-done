@@ -4,4 +4,22 @@
 
 {% block content %}
 <h1>Tasks</h1>
+
+<form action="">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">Add Task</button>
+</form>
+
+<hr>
+
+{% for task in pending_tasks %}
+<div>
+  <label>
+    <input type="checkbox" name="" id="">
+    <div>{{ task.title }}</div>
+    <div>{{ task.description }}</div>
+  </label>
+</div>
+{% endfor %}
 {% endblock %}

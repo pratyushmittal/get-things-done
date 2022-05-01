@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     # Ours
     "boards",
+    "tasks",
 ]
 
 MIDDLEWARE = [
