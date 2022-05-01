@@ -1,0 +1,86 @@
+name: Automated Testing
+
+on: [push]
+
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # list of pre-installed softwares is provided here:
+      # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-README.md
+      - name: start mysql server already installed in the image
+        run: |
+          sudo systemctl start mysql.service
+          sudo mysql --version
+
+      - name: Set up Python version
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Checking python version
+        run: python --version
+
+      - name: Install pre dependencies
+        run: |
+          sudo apt-get update
+          sudo apt install -y build-essential pkg-config python3-dev
+          sudo apt-get install libmysqlclient-dev
+
+      - name: Create MySQL user
+        run: |
+          sudo mysql -uroot -proot -e "create user 'py-user' identified by 'p@@sWord';"
+          sudo mysql -uroot -proot -e "grant all privileges on *.* to 'py-user';"
+
+      - name: Verify Mysql connection
+        env:
+          PORT: 3306
+          MYSQL_USER: py-user
+          MYSQL_PASSWORD: p@@sWord
+          HOST: "127.0.0.1"
+        run: mysqladmin ping -h$HOST --port $PORT -u$MYSQL_USER -p$MYSQL_PASSWORD
+
+      
+      - name: Check for cache of Pipfile downloads
+        id: cache-pip-downloads
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('**/requirements/requirements-dev.txt') }}-v3
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+
+      
+      - name: Check for cache of Pipfile dependencies
+        id: cache-pip
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ runner.os }}-${{ hashFiles('**/requirements/requirements-dev.txt') }}-v3
+          restore-keys: |
+            ${{ env.pythonLocation }}-${{ runner.os }}-pip-
+      
+
+      - name: Install dependencies from requirements
+        run: |
+          pip install --upgrade pip
+          pip install wheel
+          pip install -r requirements/requirements-dev.txt
+
+      - name: Run tests
+        run: |
+          cp .env.sample .env
+          python -Wa manage.py test --exclude-tag=external --verbosity=2 --settings=get_things_done.settings.test
+
+      - name: Run linters
+        run: curlylint $(find . -name "templates")

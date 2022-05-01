@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PROJECT=/home/getdone/webapps/get_things_done
+BRANCH=main
+
+echo "Project is $PROJECT with branch $BRANCH"
+
+# exit if anything fails
+set -e
+
+echo "Checking out new code"
+mkdir -p $PROJECT
+git --work-tree=$PROJECT checkout $BRANCH -f
+
+echo "Running deploy/deploy.sh"
+cd $PROJECT
+bash ~/webapps/get_things_done/deploy/deploy.sh

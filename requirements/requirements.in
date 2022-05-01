@@ -1,0 +1,20 @@
+django==4.0.4
+uwsgi==2.0.20
+ipython==8.2.0
+mysqlclient==2.1.0
+sqlparse==0.4.2
+pymemcache==3.5.2
+
+# 12-factor security
+django-environ==0.8.1
+
+# Django
+pytz==2022.1
+geoip2==4.5.0
+
+# Run the following after updating this file:
+#    pip-compile --output-file=requirements/requirements.txt requirements/requirements.in
+#
+# to list new packages: pip list --outdated --not-required
+# to sync pip installations: pip-sync requirements/requirements.txt
+# the sync will uninstall unused packages too
