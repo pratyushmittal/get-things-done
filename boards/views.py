@@ -17,8 +17,8 @@ def _get_unique_slug():
     # create a random alphabetical string of 9 characters
     chars = [random.choice(string.ascii_letters) for i in range(9)]
     chars.insert(3, "-")
-    chars.insert(6, "-")
-    slug = "".join(chars)
+    chars.insert(7, "-")
+    slug = "".join(chars).lower()
 
     if Board.objects.filter(slug=slug).exists():
         return _get_unique_slug()
