@@ -1,12 +1,12 @@
 # About Get Things Done
 
-<< What does this project do >>
+This is a todo manager based on David Allen's Getting Things Done.
 
 ## Problem statement
 
-- << ______ >>
-- is a problem for << ------ >>
-- because << --------- >>.
+- Managing tasks
+- is a problem for most people
+- because they don't have a system for it.
 
 
 ## Getting the local server running
