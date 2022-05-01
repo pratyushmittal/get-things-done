@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.humanize",
+    # Ours
+    "boards",
 ]
 
 MIDDLEWARE = [

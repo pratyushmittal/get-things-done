@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block title %}Get Things Done{% endblock %}
+
+{% block content %}
+<h1>Get Started</h1>
+
+<form action="{% url 'boards:create' %}" method="post">
+  {% csrf_token %}
+  <button type="submit">Create List</button>
+</form>
+{% endblock %}
