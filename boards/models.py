@@ -6,7 +6,7 @@ from django.utils import timezone
 class Board(models.Model):
     slug = models.CharField(max_length=30, unique=True)
     ip = models.GenericIPAddressField()
-    create_date = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.slug

@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Create new Group
+{% endblock %}
+
+{% block content %}
+<h1 class="h3">Create new Group</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <button>Create</button>
+</form>
+{% endblock %}

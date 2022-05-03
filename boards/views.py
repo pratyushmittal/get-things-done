@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from boards.utils import get_ip
-from tasks.forms import TaskForm
 
 from .models import Board
 
@@ -34,7 +33,28 @@ def create_board(request):
     return redirect(board.get_absolute_url())
 
 
+def _serialize_board(board):
+    return {
+        "slug": board.slug,
+        "categories": [
+            {
+                "id": category.id,
+                "name": category.name,
+                "tasks": [
+                    task
+                    for task in category.task_set.values()
+                    if not task["completed_at"]
+                ],
+            }
+            for category in board.category_set.all()
+        ],
+    }
+
+
 def view_board(request, slug):
     board = get_object_or_404(Board, slug=slug)
-    form = TaskForm()
-    return render(request, "view_board.html", {"board": board, "form": form})
+    return render(
+        request,
+        "view_board.html",
+        {"board": _serialize_board(board)},
+    )

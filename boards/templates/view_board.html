@@ -3,23 +3,31 @@
 {% block title %}TO-DOs List{% endblock %}
 
 {% block content %}
-<h1>Tasks</h1>
+<h1 class="h3">Your tasks</h1>
 
-<form action="{% url 'boards:tasks:add' board_slug=board.slug %}" method="post">
-  {% csrf_token %}
-  {{ form }}
-  <button type="submit">Add Task</button>
-</form>
+{{ board|json_script:"board" }}
 
-<hr>
+<div x-data="{board: {}}" x-init="board = JSON.parse(document.getElementById('board').textContent)">
+  <template x-for="category in board.categories" :key="category.id">
+    <ul>
+      <li>
+        <h2 x-text="category.name"></h2>
+      </li>
+      <li>
+        <button>+ Add Task</button>
+      </li>
+      <template x-for="task in category.tasks" :key="task.id">
+        <li class="flex">
+          <input type="checkbox" x-model="task.done">
+          <div>
+            <span x-text="task.name"></span>
+            <span x-text="task.description"></span>
+          </div>
+        </li>
+      </template>
+    </ul>
+  </template>
 
-{% for task in pending_tasks %}
-<div>
-  <label>
-    <input type="checkbox" name="" id="">
-    <div>{{ task.title }}</div>
-    <div>{{ task.description }}</div>
-  </label>
+  <a href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
 </div>
-{% endfor %}
 {% endblock %}
