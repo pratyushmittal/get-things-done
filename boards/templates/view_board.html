@@ -4,12 +4,21 @@
 
 {% block content %}
 {% for category in board.categories %}
-<ul class="no-style">
+<ul class="no-style margin-top-56">
   <li class="margin-bottom-8">
     <h1 class="margin-0">{{ category.name }}</h1>
   </li>
-  <li class="margin-bottom-8">
-    <a class="button" href="{% url 'boards:tasks:add_task' board_slug=board.slug category_id=category.id %}">+ Add Task</a>
+  <li class="margin-bottom-8" x-data="{showForm: false}">
+    <button x-on:click="showForm = true" x-show="!showForm">+ Add Task</button>
+    <div x-show="showForm">
+      <form action="{% url 'boards:tasks:add_task' board_slug=board.slug category_id=category.id %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Task name" required />
+        <input type="text" name="description" placeholder="Task name" />
+        <button type="submit">Add Task</button>
+        <button type="button" x-on:click="showForm = false">Cancel</button>
+      </form>
+    </div>
   </li>
 
   {% for task in category.tasks %}

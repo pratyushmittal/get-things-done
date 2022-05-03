@@ -12,7 +12,7 @@ def add_task(request, board_slug, category_id):
     )
     if request.method == "POST":
         form = TaskForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             task = form.save(commit=False)
             task.category = category
             task.save()
@@ -34,7 +34,7 @@ def add_category(request, board_slug):
     board = get_object_or_404(Board, slug=board_slug)
     if request.method == "POST":
         form = CategoryForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             category = form.save(commit=False)
             category.board = board
             category.save()
