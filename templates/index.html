@@ -13,7 +13,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  <script src="//unpkg.com/alpinejs" defer></script>
+
+  <script defer src="//unpkg.com/@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="//unpkg.com/alpinejs"></script>
+  <script src="{% static 'js/utils.js' %}"></script>
 </head>
 <body>
   {% block content %}

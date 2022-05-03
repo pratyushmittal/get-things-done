@@ -16,17 +16,12 @@ def add_task(request, board_slug, category_id):
             task = form.save(commit=False)
             task.category = category
             task.save()
-            return redirect(category.board.get_absolute_url())
     else:
         form = TaskForm()
     return render(
         request,
-        "render_form.html",
-        {
-            "form": form,
-            "title": "Add Task",
-            "submit": "Create Task",
-        },
+        "parts/category_tasks.html",
+        {"form": form, "category": category},
     )
 
 

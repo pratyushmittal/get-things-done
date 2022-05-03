@@ -1,0 +1,34 @@
+<ul x-data class="no-style margin-top-56" key="{{ category.id }}" x-ref="categoryList">
+  <li class="margin-bottom-8" key="-2">
+    <h1 class="margin-0">{{ category.name }}</h1>
+  </li>
+  <li class="margin-bottom-8" x-data="{showForm: false}" key="-1">
+    <button x-on:click="showForm = true" x-show="!showForm">+ Add Task</button>
+    <div x-show="showForm">
+      <form
+        action="{% url 'boards:tasks:add_task' board_slug=category.board.slug category_id=category.id %}"
+        method="POST"
+        x-on:submit.prevent="
+          Utils.ajaxSubmit($el)
+          .then(resp => resp.text())
+          .then(html => Alpine.morph($refs.categoryList, html))
+        "
+      >
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Add Task</button>
+        <button type="button" x-on:click="showForm = false">Cancel</button>
+      </form>
+    </div>
+  </li>
+
+  {% for task in category.incomplete_tasks %}
+  <li class="flex flex-align-center padding-8-0" key="{{ task.id }}">
+    <input type="checkbox" class="large-checkbox">
+    <div>
+      <div>{{ task.title }}</div>
+      <div class="mute smaller">{{ task.description }}</div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
