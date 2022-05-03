@@ -3,28 +3,26 @@
 {% block title %}TO-DOs List{% endblock %}
 
 {% block content %}
-<h1 class="h3">Your tasks</h1>
-
 {% for category in board.categories %}
-<ul>
-  <li>
-    <h2>{{ category.name }}</h2>
+<ul class="no-style">
+  <li class="margin-bottom-8">
+    <h1 class="margin-0">{{ category.name }}</h1>
   </li>
-  <li>
-    <a href="{% url 'boards:tasks:add_task' board_slug=board.slug category_id=category.id %}">+ Add Task</a>
+  <li class="margin-bottom-8">
+    <a class="button" href="{% url 'boards:tasks:add_task' board_slug=board.slug category_id=category.id %}">+ Add Task</a>
   </li>
 
   {% for task in category.tasks %}
-  <li class="flex">
-    <input type="checkbox">
+  <li class="flex flex-align-center padding-8-0">
+    <input type="checkbox" class="large-checkbox">
     <div>
       <div>{{ task.title }}</div>
-      <div>{{ task.description }}</div>
+      <div class="mute smaller">{{ task.description }}</div>
     </div>
   </li>
   {% endfor %}
 </ul>
 {% endfor %}
 
-<a href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
+<a class="button" href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
 {% endblock %}
