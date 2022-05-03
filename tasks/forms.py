@@ -4,6 +4,8 @@ from .models import Category, Task
 
 
 class TaskForm(forms.ModelForm):
+    description = forms.CharField(required=False)
+
     class Meta:
         model = Task
         fields = ["title", "description"]

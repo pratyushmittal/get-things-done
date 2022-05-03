@@ -6,12 +6,17 @@
     <button x-on:click="showForm = true" x-show="!showForm">+ Add Task</button>
     <div x-show="showForm" x-cloak>
       <form
+        class="form-vertical"
         action="{% url 'boards:tasks:add_task' board_slug=category.board.slug category_id=category.id %}"
         method="POST"
         x-on:submit.prevent="
           Utils.ajaxSubmit($el)
           .then(resp => resp.text())
           .then(html => Alpine.morph($refs.categoryList, html))
+          .then(() => {
+            $el.title.value = ''
+            $el.description.value = ''
+          })
         "
       >
         {% csrf_token %}

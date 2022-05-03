@@ -107,3 +107,19 @@ button,
 [x-cloak] {
     display: none !important;
 }
+
+.form-vertical label {
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+
+.form-vertical input[type="text"],
+.form-vertical textarea {
+    display: block;
+    border: 1px solid var(--black);
+    border-radius: 4px;
+    background: var(--background);
+    padding: 8px;
+    font-family: "Inter", sans-serif;
+    font-size: 1.6rem;
+}
