@@ -103,3 +103,7 @@ button,
     text-decoration: none;
     padding: 8px 16px;
 }
+
+[x-cloak] {
+    display: none !important;
+}

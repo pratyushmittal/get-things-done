@@ -4,7 +4,7 @@
   </li>
   <li class="margin-bottom-8" x-data="{showForm: false}" key="-1">
     <button x-on:click="showForm = true" x-show="!showForm">+ Add Task</button>
-    <div x-show="showForm">
+    <div x-show="showForm" x-cloak>
       <form
         action="{% url 'boards:tasks:add_task' board_slug=category.board.slug category_id=category.id %}"
         method="POST"
