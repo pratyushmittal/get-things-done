@@ -5,29 +5,26 @@
 {% block content %}
 <h1 class="h3">Your tasks</h1>
 
-{{ board|json_script:"board" }}
+{% for category in board.categories %}
+<ul>
+  <li>
+    <h2>{{ category.name }}</h2>
+  </li>
+  <li>
+    <a href="{% url 'boards:tasks:add_task' board_slug=board.slug category_id=category.id %}">+ Add Task</a>
+  </li>
 
-<div x-data="{board: {}}" x-init="board = JSON.parse(document.getElementById('board').textContent)">
-  <template x-for="category in board.categories" :key="category.id">
-    <ul>
-      <li>
-        <h2 x-text="category.name"></h2>
-      </li>
-      <li>
-        <button>+ Add Task</button>
-      </li>
-      <template x-for="task in category.tasks" :key="task.id">
-        <li class="flex">
-          <input type="checkbox" x-model="task.done">
-          <div>
-            <span x-text="task.name"></span>
-            <span x-text="task.description"></span>
-          </div>
-        </li>
-      </template>
-    </ul>
-  </template>
+  {% for task in category.tasks %}
+  <li class="flex">
+    <input type="checkbox">
+    <div>
+      <div>{{ task.title }}</div>
+      <div>{{ task.description }}</div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endfor %}
 
-  <a href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
-</div>
+<a href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
 {% endblock %}
