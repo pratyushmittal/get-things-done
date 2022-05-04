@@ -5,7 +5,7 @@
 set -e  # exit if anything fails
 
 echo "Installing requirements"
-pip3.9 install --upgrade pip
+pip3.9 install --upgrade pip --user
 pip3.9 install -r requirements/requirements.txt --user
 
 echo "Collecting Static files"
