@@ -46,6 +46,12 @@
     <div>
       <div>{{ task.title }}</div>
       <div class="mute smaller">{{ task.description }}</div>
+      <div class="show-on-active">
+        <a
+          href="{% url 'boards:tasks:edit' board_slug=category.board.slug task_id=task.id %}"
+          class="button small"
+        >Edit</a>
+      </div>
     </div>
   </li>
   {% endfor %}

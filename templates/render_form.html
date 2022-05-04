@@ -5,7 +5,7 @@
 {% block content %}
 <h1 class="h3">{{ title }}</h1>
 
-<form method="post">
+<form method="post" class="form-vertical">
   {% csrf_token %}
   {{ form }}
   <button>{{ submit }}</button>

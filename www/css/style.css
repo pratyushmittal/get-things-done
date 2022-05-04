@@ -55,6 +55,14 @@ ul li.active {
     border-radius: 6px;
 }
 
+.show-on-active {
+    display: none;
+}
+
+.active .show-on-active {
+    display: block;
+}
+
 .margin-0 {
     margin: 0;
 }
@@ -112,6 +120,10 @@ ul li.active {
     background: var(--accent);
 }
 
+.button {
+    display: inline-block;
+}
+
 button,
 .button {
     background: var(--accent);
@@ -124,6 +136,16 @@ button,
     font-weight: 500;
     text-decoration: none;
     padding: 8px 16px;
+}
+
+.active button,
+.active .button {
+    border: 1px solid var(--black);
+}
+
+.button.small,
+button.small {
+    padding: 4px 8px;
 }
 
 [x-cloak] {

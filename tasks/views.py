@@ -20,6 +20,28 @@ def update_status(request, board_slug, task_id):
     return JsonResponse({"completed": task.completed_at})
 
 
+def edit_task(request, board_slug, task_id):
+    task = get_object_or_404(
+        Task, id=task_id, category__board__slug=board_slug
+    )
+    if request.method == "POST":
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect(task.category.board.get_absolute_url())
+    else:
+        form = TaskForm(instance=task)
+    return render(
+        request,
+        "render_form.html",
+        {
+            "form": form,
+            "title": f"Edit {task.title}",
+            "submit": "Save",
+        },
+    )
+
+
 def add_task(request, board_slug, category_id):
     category = get_object_or_404(
         Category, board__slug=board_slug, id=category_id
