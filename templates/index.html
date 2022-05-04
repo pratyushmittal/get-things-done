@@ -17,7 +17,9 @@
   <script defer src="//unpkg.com/@alpinejs/morph@3.x.x/dist/cdn.min.js"></script>
   <script defer src="//unpkg.com/alpinejs"></script>
   <script src="{% static 'js/utils.js' %}"></script>
+  <script src="{% static 'js/app.js' %}"></script>
 </head>
+{% block body %}
 <body>
   {% block content %}
   <h1>Start Building</h1>
@@ -27,4 +29,5 @@
   <p class="mute">Edit <code>index.html</code> to edit this page.</p>
   {% endblock %}
 </body>
+{% endblock %}
 </html>

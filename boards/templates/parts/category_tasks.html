@@ -1,8 +1,8 @@
-<ul x-data class="no-style margin-top-56" key="{{ category.id }}" x-ref="categoryList">
-  <li class="margin-bottom-8" key="-2">
+<ul x-data class="no-style margin-top-56" key="category-{{ category.id }}" x-ref="categoryList">
+  <li class="margin-bottom-8" key="category-name">
     <h1 class="margin-0">{{ category.name }}</h1>
   </li>
-  <li class="margin-bottom-8" x-data="{showForm: false}" key="-1">
+  <li class="margin-bottom-8" x-data="{showForm: false}" key="category-form">
     <button x-on:click="showForm = true" x-show="!showForm">+ Add Task</button>
     <div x-show="showForm" x-cloak>
       <form
@@ -30,9 +30,10 @@
   {% for task in category.incomplete_tasks %}
   <li
     class="flex flex-align-center padding-8-0"
-    key="{{ task.id }}"
-    x-on:click="activeTaskId = $el.getAttribute('key')"
-    :class="{'active': activeTaskId === $el.getAttribute('key')}"
+    key="task-{{ task.id }}"
+    data-task-id="{{ task.id }}"
+    x-on:click="activeTaskId = $el.dataset.taskId"
+    :class="{'active': activeTaskId === $el.dataset.taskId}"
   >
     <input
       type="checkbox"
