@@ -1,9 +1,23 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 from boards.models import Board
 
 from .forms import CategoryForm, TaskForm
-from .models import Category
+from .models import Category, Task
+
+
+@require_POST
+def update_status(request, board_slug, task_id):
+    task = get_object_or_404(
+        Task, id=task_id, category__board__slug=board_slug
+    )
+    is_completed = request.POST.get("completed") == "true"
+    task.completed_at = timezone.now() if is_completed else None
+    task.save()
+    return JsonResponse({"completed": task.completed_at})
 
 
 def add_task(request, board_slug, category_id):

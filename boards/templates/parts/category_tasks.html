@@ -29,7 +29,14 @@
 
   {% for task in category.incomplete_tasks %}
   <li class="flex flex-align-center padding-8-0" key="{{ task.id }}">
-    <input type="checkbox" class="large-checkbox">
+    <input
+      type="checkbox"
+      class="large-checkbox"
+      data-action="{% url 'boards:tasks:update_status' board_slug=category.board.slug task_id=task.id %}"
+      x-data="{completed: false}"
+      x-model="completed"
+      x-on:change="Utils.post($el.dataset.action, {completed: completed})"
+    >
     <div>
       <div>{{ task.title }}</div>
       <div class="mute smaller">{{ task.description }}</div>

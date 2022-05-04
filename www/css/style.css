@@ -90,6 +90,21 @@ ul.no-style {
     margin: 0 36px 0 0;
 }
 
+.large-checkbox::after {
+    content: " ";
+    display: block;
+    font-size: 28px;
+    line-height: 1;
+    text-indent: 1px;
+    background: var(--background);
+    border-radius: 6px;
+}
+
+.large-checkbox:checked::after {
+    content: "✓";
+    background: var(--accent);
+}
+
 button,
 .button {
     background: var(--accent);
