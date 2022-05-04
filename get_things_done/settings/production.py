@@ -1,5 +1,7 @@
 """Production settings and globals."""
 
+from pathlib import Path
+
 from .base import *  # noqa
 
 DEBUG = False
@@ -9,10 +11,11 @@ ALLOWED_HOSTS = [
 ]
 
 TEMP_ROOT = "/tmp"
-DATA_ROOT = BASE_DIR.parent / "data"  # noqa
-STATIC_ROOT = DATA_ROOT / "www" / "static"
+DATA_ROOT = Path("/home/getdone/data")
+WEB_ROOT = Path("/home/getdone/html")
+STATIC_ROOT = WEB_ROOT / "static"
 STATIC_URL = "/static/"
-MEDIA_ROOT = DATA_ROOT / "www" / "media"
+MEDIA_ROOT = WEB_ROOT / "media"
 MEDIA_URL = "/media/"
 
 
