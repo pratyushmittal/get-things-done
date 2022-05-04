@@ -1,6 +1,13 @@
 import factory
 
-from tasks.models import Task
+from tasks.models import Category, Task
+
+
+class CategoryFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Category
+
+    name = "General Tasks"
 
 
 class TaskFactory(factory.django.DjangoModelFactory):
@@ -9,4 +16,4 @@ class TaskFactory(factory.django.DjangoModelFactory):
 
     title = "Publish repo on Github"
     description = "Create new repo on Github"
-    category = "coding"
+    category = factory.SubFactory(CategoryFactory)
