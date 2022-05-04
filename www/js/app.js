@@ -22,9 +22,6 @@
   }
 
   function setupEverything () {
-    document.addEventListener('keyup', function (e) {
-      console.log(e.currentTarget)
-    })
     window.App = {
       getNextTaskId: getNextTaskId,
       getPreviousTaskId: getPreviousTaskId

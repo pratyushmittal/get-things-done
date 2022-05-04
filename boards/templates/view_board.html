@@ -2,16 +2,16 @@
 
 {% block title %}TO-DOs List{% endblock %}
 
-{% block body %}
-<body
+{% block content %}
+<div
   x-data="{activeTaskId: null}"
-  x-on:keyup.j="activeTaskId = App.getNextTaskId(activeTaskId)"
-  x-on:keyup.k="activeTaskId = App.getPreviousTaskId(activeTaskId)"
+  x-on:keydown.j.document="activeTaskId = App.getNextTaskId(activeTaskId)"
+  x-on:keydown.k.document="activeTaskId = App.getPreviousTaskId(activeTaskId)"
 >
   {% for category in board.category_set.all %}
   {% include 'parts/category_tasks.html' with form=task_form %}
   {% endfor %}
 
   <a class="button" href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
-</body>
+</div>
 {% endblock %}
