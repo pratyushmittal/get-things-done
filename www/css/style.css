@@ -53,6 +53,7 @@ ul li.active {
     padding: 8px;
     margin: 0 -8px;
     border-radius: 6px;
+    outline: none;
 }
 
 .show-on-active {
