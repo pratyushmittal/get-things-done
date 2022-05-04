@@ -33,15 +33,17 @@
     class="flex flex-align-center padding-8-0"
     key="task-{{ task.id }}"
     data-task-id="{{ task.id }}"
+    x-data="{completed: false}"
     x-on:click="activeTaskId = $el.dataset.taskId"
     :class="{'active': activeTaskId === $el.dataset.taskId}"
+    x-on:keydown.space.prevent="$refs.checkbox.click()"
   >
     <input
       type="checkbox"
       class="large-checkbox"
       data-action="{% url 'boards:tasks:update_status' board_slug=category.board.slug task_id=task.id %}"
-      x-data="{completed: false}"
       x-model="completed"
+      x-ref="checkbox"
       x-on:change="Utils.post($el.dataset.action, {completed: completed})"
     >
     <div>
