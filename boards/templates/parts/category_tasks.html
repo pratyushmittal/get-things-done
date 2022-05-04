@@ -44,13 +44,21 @@
       x-on:change="Utils.post($el.dataset.action, {completed: completed})"
     >
     <div>
-      <div>{{ task.title }}</div>
+      <div>
+        {{ task.title }}
+        <span class="show-on-active">
+          <a
+            href="{% url 'boards:tasks:edit' board_slug=category.board.slug task_id=task.id %}"
+            class="button small"
+          >Edit</a>
+        </span>
+      </div>
       <div class="mute smaller">{{ task.description }}</div>
       <div class="show-on-active">
         <a
-          href="{% url 'boards:tasks:edit' board_slug=category.board.slug task_id=task.id %}"
+          href="{% url 'boards:tasks:snooze' board_slug=category.board.slug task_id=task.id %}"
           class="button small"
-        >Edit</a>
+        >Snooze</a>
       </div>
     </div>
   </li>

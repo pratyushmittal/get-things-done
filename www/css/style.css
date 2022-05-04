@@ -60,7 +60,7 @@ ul li.active {
 }
 
 .active .show-on-active {
-    display: block;
+    display: initial;
 }
 
 .margin-0 {

@@ -12,9 +12,6 @@ urlpatterns = [
         views.update_status,
         name="update_status",
     ),
-    path(
-        "<int:task_id>/edit/",
-        views.edit_task,
-        name="edit",
-    ),
+    path("<int:task_id>/edit/", views.edit_task, name="edit"),
+    path("<int:task_id>/snooze/", views.snooze_task, name="snooze"),
 ]

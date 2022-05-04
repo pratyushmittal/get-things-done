@@ -24,6 +24,7 @@ class Task(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
     completed_at = models.DateTimeField(null=True, blank=True, default=None)
+    snoozed_till = models.DateTimeField(null=True, blank=True, default=None)
 
     def __str__(self):
         return self.title

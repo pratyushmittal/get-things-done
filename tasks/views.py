@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 
 from boards.models import Board
 
-from .forms import CategoryForm, TaskForm
+from .forms import CategoryForm, SnoozeForm, TaskForm
 from .models import Category, Task
 
 
@@ -18,6 +18,28 @@ def update_status(request, board_slug, task_id):
     task.completed_at = timezone.now() if is_completed else None
     task.save()
     return JsonResponse({"completed": task.completed_at})
+
+
+def snooze_task(request, board_slug, task_id):
+    task = get_object_or_404(
+        Task, id=task_id, category__board__slug=board_slug
+    )
+    if request.method == "POST":
+        form = SnoozeForm(request.POST, instance=task)
+        if form.is_valid():
+            task.save()
+            return redirect(task.category.board.get_absolute_url())
+    else:
+        form = SnoozeForm(instance=task)
+    return render(
+        request,
+        "render_form.html",
+        {
+            "form": form,
+            "title": f"Snooze {task.title}",
+            "submit": "Snooze",
+        },
+    )
 
 
 def edit_task(request, board_slug, task_id):
