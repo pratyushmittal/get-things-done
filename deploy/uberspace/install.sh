@@ -1,16 +1,19 @@
-# copy the code directory to remote
-# the run following commands
-echo "run on local\n$ scp -r deploy get_things_done:"
+# run these commands on local
+# scp -r deploy getdone:
+# ssh getdone 'bash deploy/uberspace/install.sh'
+
 cd deploy/uberspace
 
 set -e
 
 # create folders
-mkdir ~/repos
+mkdir -p ~/repos
 git init --bare ~/repos/get_things_done.git
-cp ../post-receive ~/repos/get_things_done.git/hooks/post-receive
+cp post-receive ~/repos/get_things_done.git/hooks/post-receive
 chmod +x ~/repos/get_things_done.git/hooks/post-receive
-mkdir ~/webapps
+mkdir -p ~/webapps/get_things_done
+touch ~/ENV
+ln -s /home/getdone/ENV ~/webapps/get_things_done/.env
 
 # https://lab.uberspace.de/guide_django.html
 # install uwsgi
@@ -43,16 +46,15 @@ uberspace web header set www.get-things-done.com/favicon.ico expires 7d
 
 uberspace web header set www.get-things-done.com/static gzip on
 uberspace web header set www.get-things-done.com/static gzip_comp_level 6
-uberspace web header set www.get-things-done.com/static gzip_types text/plain text/css text/xml application/json application/javascript application/xml+rss application/atom+xml image/svg+xml
 uberspace web header set www.get-things-done.com/static gzip_types "text/plain text/css text/xml application/json application/javascript application/xml+rss application/atom+xml image/svg+xml"
 
-
-# import content
-python3.9 manage.py migrate --settings=get_things_done.settings.production
-python3.9 manage.py createsuperuser --settings=get_things_done.settings.production
+# 
 
 # instructions to setup git push
 echo "Remote setup done"
 echo "Run these on local"
-echo "git remote add live getdone:/repos/get_things_done.git"
+echo "git remote add live getdone:repos/get_things_done.git"
 echo "git push live"
+echo "ssh getdone"
+echo "vi ENV"
+echo "python3.9 manage.py createsuperuser --settings=get_things_done.settings.production"
