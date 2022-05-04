@@ -28,7 +28,12 @@
   </li>
 
   {% for task in category.incomplete_tasks %}
-  <li class="flex flex-align-center padding-8-0" key="{{ task.id }}">
+  <li
+    class="flex flex-align-center padding-8-0"
+    key="{{ task.id }}"
+    x-on:click="activeTaskId = $el.getAttribute('key')"
+    :class="{'active': activeTaskId === $el.getAttribute('key')}"
+  >
     <input
       type="checkbox"
       class="large-checkbox"

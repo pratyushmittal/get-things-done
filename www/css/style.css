@@ -48,6 +48,13 @@ ul.no-style {
     padding-left: 0;
 }
 
+ul li.active {
+    background: var(--accent);
+    padding: 8px;
+    margin: 0 -8px;
+    border-radius: 6px;
+}
+
 .margin-0 {
     margin: 0;
 }

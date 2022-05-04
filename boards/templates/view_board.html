@@ -3,9 +3,11 @@
 {% block title %}TO-DOs List{% endblock %}
 
 {% block content %}
-{% for category in board.category_set.all %}
-{% include 'parts/category_tasks.html' with form=task_form %}
-{% endfor %}
+<div x-data="{activeTaskId: null}">
+  {% for category in board.category_set.all %}
+  {% include 'parts/category_tasks.html' with form=task_form %}
+  {% endfor %}
+</div>
 
 <a class="button" href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
 {% endblock %}
