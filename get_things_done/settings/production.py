@@ -5,15 +5,15 @@ from .base import *  # noqa
 DEBUG = False
 PRODUCTION = True
 ALLOWED_HOSTS = [
-    "www.example.com",
+    "www.get-things-done.com",
 ]
 
 TEMP_ROOT = "/tmp"
 DATA_ROOT = BASE_DIR.parent / "data"  # noqa
 STATIC_ROOT = DATA_ROOT / "www" / "static"
-STATIC_URL = "https://cdn-static.example.com/"
+STATIC_URL = "/static/"
 MEDIA_ROOT = DATA_ROOT / "www" / "media"
-MEDIA_URL = "https://cdn-media.example.com/"
+MEDIA_URL = "/media/"
 
 
 # HTTPS settings
