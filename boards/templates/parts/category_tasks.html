@@ -29,6 +29,7 @@
 
   {% for task in category.incomplete_tasks %}
   <li
+    tabindex="-1"
     class="flex flex-align-center padding-8-0"
     key="task-{{ task.id }}"
     data-task-id="{{ task.id }}"

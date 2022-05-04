@@ -5,8 +5,14 @@
 {% block content %}
 <div
   x-data="{activeTaskId: null}"
-  x-on:keydown.j.document="activeTaskId = App.getNextTaskId(activeTaskId)"
-  x-on:keydown.k.document="activeTaskId = App.getPreviousTaskId(activeTaskId)"
+  x-on:keydown.j.document="
+    activeTaskId = App.getNextTaskId(activeTaskId)
+    App.setFocus(activeTaskId)
+  "
+  x-on:keydown.k.document="
+    activeTaskId = App.getPreviousTaskId(activeTaskId)
+    App.setFocus(activeTaskId)
+  "
 >
   {% for category in board.category_set.all %}
   {% include 'parts/category_tasks.html' with form=task_form %}

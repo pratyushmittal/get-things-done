@@ -21,10 +21,16 @@
     return allTaskIds[targetIdx]
   }
 
+  function setFocus (taskId) {
+    var task = document.querySelector(`[data-task-id="${taskId}"]`)
+    task.focus()
+  }
+
   function setupEverything () {
     window.App = {
       getNextTaskId: getNextTaskId,
-      getPreviousTaskId: getPreviousTaskId
+      getPreviousTaskId: getPreviousTaskId,
+      setFocus: setFocus
     }
   }
   setupEverything()
