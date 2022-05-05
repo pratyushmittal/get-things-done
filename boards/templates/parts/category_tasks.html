@@ -81,7 +81,10 @@
       formData = JSON.parse(document.getElementById('{{ task.json_script_id }}').textContent)
     "
     x-on:click="activeTaskId = $el.dataset.taskId"
-    :class="{'active': activeTaskId === $el.dataset.taskId}"
+    :class="{
+      'active': activeTaskId === $el.dataset.taskId,
+      'disabled': formData.is_completed
+    }"
     x-on:keydown.space.prevent="$refs.checkbox.click()"
   >
     <input

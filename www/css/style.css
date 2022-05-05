@@ -52,6 +52,9 @@ ul li.active {
     border-radius: 6px;
     outline: none;
 }
+ul li.disabled {
+    opacity: 0.3;
+}
 
 .show-on-active {
     display: none;
