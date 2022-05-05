@@ -21,13 +21,10 @@ body {
 }
 
 h1,
-h2,
-h3 {
-    font-weight: 600;
-}
-
-h1 {
+.h1 {
+    margin: 0.67em 0;
     font-size: 3rem;
+    font-weight: 600;
 }
 
 .mute {
@@ -153,6 +150,14 @@ button.small {
     display: none !important;
 }
 
+.form-dblclick label {
+    display: none;
+}
+
+.form-dblclick input[type="text"] {
+    font: inherit;
+}
+
 .form-vertical label {
     font-weight: 600;
     font-size: 1.6rem;
@@ -167,4 +172,17 @@ button.small {
     padding: 8px;
     font-family: "Inter", sans-serif;
     font-size: 1.6rem;
+}
+
+input.inline {
+    /* display input field as regular input */
+    display: inherit;
+}
+
+dialog.dialog-inline {
+    /* display dialog as regular dialog */
+    position: inherit;
+    border: initial;
+    padding: initial;
+    margin: initial;
 }

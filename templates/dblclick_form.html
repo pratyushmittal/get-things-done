@@ -1,0 +1,5 @@
+<form method="post" action="{{ request.get_full_path }}" class="form-dblclick">
+  {% csrf_token %}
+  {{ form }}
+  <button>{{ submit }}</button>
+</form>

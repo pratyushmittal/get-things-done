@@ -83,6 +83,27 @@ def add_task(request, board_slug, category_id):
     )
 
 
+def edit_category(request, board_slug, category_id):
+    category = get_object_or_404(
+        Category, board__slug=board_slug, id=category_id
+    )
+    if request.method == "POST":
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            category = form.save()
+            return redirect(category.board.get_absolute_url())
+    else:
+        form = CategoryForm(instance=category)
+    return render(
+        request,
+        "dblclick_form.html",
+        {
+            "form": form,
+            "submit": "Save",
+        },
+    )
+
+
 def add_category(request, board_slug):
     board = get_object_or_404(Board, slug=board_slug)
     if request.method == "POST":

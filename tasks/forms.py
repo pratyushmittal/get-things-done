@@ -28,6 +28,10 @@ class TaskForm(forms.ModelForm):
 
 
 class CategoryForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(attrs={"autofocus": "autofocus"})
+    )
+
     class Meta:
         model = Category
         fields = ["name"]

@@ -1,6 +1,35 @@
 <ul x-data class="no-style margin-top-56" key="category-{{ category.id }}" x-ref="categoryList">
-  <li class="margin-bottom-8" key="category-name">
-    <h1 class="margin-0">{{ category.name }}</h1>
+  <li
+    class="margin-bottom-8"
+    key="category-name"
+    x-data="{'isEditing': false}"
+  >
+    <h1
+      class="margin-0"
+      data-url="{% url 'boards:tasks:edit_category' board_slug=category.board.slug category_id=category.id %}"
+      x-on:dblclick="
+        fetch($el.dataset.url)
+        .then(resp => resp.text())
+        .then(html => {
+          isEditing = true
+          $refs.categoryEditForm.innerHTML = html
+          $refs.categoryEditForm.show()
+        })
+      "
+      x-show="!isEditing"
+    >
+      {{ category.name }}
+    </h1>
+    <dialog
+      class="h1 dialog-inline"
+      x-ref="categoryEditForm"
+      x-on:keydown.escape="
+        isEditing = false
+        $el.close()
+      "
+      x-on:keydown.stop
+    >
+    </dialog>
   </li>
   <li class="margin-bottom-8" x-data="{showForm: false}" key="category-form">
     <button x-on:click="showForm = true" x-show="!showForm">+ Add Task</button>
