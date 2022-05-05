@@ -1,11 +1,13 @@
 import random
 import string
 
+from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from boards.utils import get_ip
 from tasks.forms import TaskForm
+from tasks.models import Category, Task
 
 from .models import Board
 
@@ -43,7 +45,20 @@ def create_board(request):
 
 
 def view_board(request, slug):
-    board = get_object_or_404(Board, slug=slug)
+    tasks = Prefetch(
+        "task_set",
+        queryset=Task.objects.filter(completed_at=None),
+        to_attr="tasks",
+    )
+    categories = Prefetch(
+        "category_set",
+        queryset=Category.objects.prefetch_related(tasks),
+        to_attr="categories",
+    )
+    board = get_object_or_404(
+        Board.objects.prefetch_related(categories),
+        slug=slug,
+    )
 
     response = render(
         request, "view_board.html", {"board": board, "task_form": TaskForm()}

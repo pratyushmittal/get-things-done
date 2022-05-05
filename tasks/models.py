@@ -8,11 +8,6 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
 
-    def incomplete_tasks(self):
-        return self.task_set.filter(completed_at__isnull=True).order_by(
-            "-updated_at"
-        )
-
     def __str__(self):
         return self.name
 

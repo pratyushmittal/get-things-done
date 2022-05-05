@@ -92,6 +92,7 @@ def add_task(request, board_slug, category_id):
             task.save()
     else:
         form = TaskForm()
+    category.tasks = category.task_set.filter(completed_at=None)
     return render(
         request,
         "parts/category_tasks.html",

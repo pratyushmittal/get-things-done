@@ -14,7 +14,7 @@
     App.setFocus(activeTaskId)
   "
 >
-  {% for category in board.category_set.all %}
+  {% for category in board.categories %}
   {% include 'parts/category_tasks.html' with form=task_form %}
   {% endfor %}
 

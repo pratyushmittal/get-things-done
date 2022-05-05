@@ -56,7 +56,7 @@
     </div>
   </li>
 
-  {% for task in category.incomplete_tasks %}
+  {% for task in category.tasks %}
   {{ task.serialize|json_script:task.json_script_id }}
   <li
     tabindex="-1"
