@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -89,6 +90,10 @@ def add_task(request, board_slug, category_id):
         if form.is_valid():
             task = form.save(commit=False)
             task.category = category
+            # create place for given task priority
+            Task.objects.filter(
+                category_id=category_id, priority__gte=task.priority
+            ).update(priority=F("priority") + 1)
             task.save()
     else:
         form = TaskForm()
