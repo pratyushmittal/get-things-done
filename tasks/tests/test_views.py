@@ -12,18 +12,23 @@ class TaskTestCases(TestCase):
             category__board=board,
             title="foobar",
             description="description foobar",
+            completed_at=None,
         )
         url = reverse(
             "boards:tasks:update_task",
             kwargs={"board_slug": board.slug, "task_id": task.id},
         )
-        response = self.client.post(url, {"description": "desc foobaz"})
+        response = self.client.post(
+            url,
+            {
+                "title": "foobar",
+                "description": "desc foobaz",
+                "is_completed": "true",
+            },
+        )
         self.assertEqual(response.status_code, 200, msg=response.json())
 
         task.refresh_from_db()
         self.assertEqual(task.title, "foobar")
         self.assertEqual(task.description, "desc foobaz")
-
-        self.assertEqual(
-            response.json(), {"success": {"description": "desc foobaz"}}
-        )
+        self.assertNotEqual(task.completed_at, None)

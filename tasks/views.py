@@ -50,9 +50,7 @@ def update_task(request, board_slug, task_id):
     form = TaskUpdateForm(request.POST, instance=task)
     if form.is_valid():
         task.completed_at = (
-            timezone.now()
-            if form.cleaned_data.get("is_completed") == "true"
-            else None
+            timezone.now() if form.cleaned_data.get("is_completed") else None
         )
         task = form.save()
         return JsonResponse({"success": form.cleaned_data})
