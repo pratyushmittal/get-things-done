@@ -174,9 +174,18 @@ button.small {
     font-size: 1.6rem;
 }
 
-input.inline {
-    /* display input field as regular input */
-    display: inherit;
+input.as-text {
+    font: inherit;
+    color: inherit;
+    border: inherit;
+    padding: inherit;
+    margin: inherit;
+    background: initial;
+}
+
+input.as-text:focus {
+    background: #fff;
+    outline: none;
 }
 
 dialog.dialog-inline {

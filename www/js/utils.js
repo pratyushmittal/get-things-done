@@ -31,10 +31,31 @@
     return post(form.action, data)
   }
 
+  function clearSelection() {
+    if(document.selection && document.selection.empty) {
+        document.selection.empty()
+    } else if(window.getSelection) {
+        var sel = window.getSelection()
+        sel.removeAllRanges()
+    }
+  }
+
+  function collapseSelection () {
+    var sel = window.getSelection()
+    if (sel.rangeCount) {
+      var range = sel.getRangeAt(0)
+      range.collapse()
+      sel.removeAllRanges()
+      sel.addRange(range)
+    }
+  }
+
   function setupEverything () {
     window.Utils = {
       post: post,
-      ajaxSubmit: ajaxSubmit
+      ajaxSubmit: ajaxSubmit,
+      clearSelection: clearSelection,
+      collapseSelection: collapseSelection
     }
   }
   setupEverything()

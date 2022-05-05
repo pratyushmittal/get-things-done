@@ -57,12 +57,29 @@
   </li>
 
   {% for task in category.incomplete_tasks %}
+  {{ task.serialize|json_script:task.json_script_id }}
   <li
     tabindex="-1"
     class="flex flex-align-center padding-8-0"
     key="task-{{ task.id }}"
     data-task-id="{{ task.id }}"
-    x-data="{completed: false}"
+    data-update-url="{% url 'boards:tasks:update_task' board_slug=category.board.slug task_id=task.id %}"
+    x-ref="task"
+    x-data="{
+      formData: {
+        title: '',
+        description: '',
+        is_completed: false
+      },
+      submitChanges() {
+        Utils.post($el.dataset.updateUrl, this.formData)
+        .then(resp => resp.json())
+        .then(data => formData = data)
+      }
+    }"
+    x-init="
+      formData = JSON.parse(document.getElementById('{{ task.json_script_id }}').textContent)
+    "
     x-on:click="activeTaskId = $el.dataset.taskId"
     :class="{'active': activeTaskId === $el.dataset.taskId}"
     x-on:keydown.space.prevent="$refs.checkbox.click()"
@@ -70,22 +87,36 @@
     <input
       type="checkbox"
       class="large-checkbox"
-      data-action="{% url 'boards:tasks:update_status' board_slug=category.board.slug task_id=task.id %}"
-      x-model="completed"
+      x-model="formData.is_completed"
       x-ref="checkbox"
-      x-on:change="Utils.post($el.dataset.action, {completed: completed})"
+      x-on:change="submitChanges()"
     >
-    <div>
+    <div class="flex">
       <div>
-        {{ task.title }}
-        <span class="show-on-active">
-          <a
-            href="{% url 'boards:tasks:edit' board_slug=category.board.slug task_id=task.id %}"
-            class="button small"
-          >Edit</a>
-        </span>
+        <input
+          class="as-text"
+          type="text"
+          value="{{ task.title }}"
+          x-model="formData.title"
+          x-on:keydown.escape="$refs.task.focus()"
+          x-on:keydown.enter="$refs.description.focus()"
+          x-on:keydown.stop
+          x-on:change="submitChanges()"
+        >
+        <div class="mute smaller">
+          <input
+            class="as-text"
+            type="text"
+            value="{{ task.description }}"
+            x-ref="description"
+            x-model="formData.description"
+            x-on:keydown.escape="$refs.task.focus()"
+            x-on:keydown.enter="$refs.task.focus()"
+            x-on:keydown.stop
+            x-on:change="submitChanges()"
+          >
+        </div>
       </div>
-      <div class="mute smaller">{{ task.description }}</div>
       <div class="show-on-active">
         <a
           href="{% url 'boards:tasks:snooze' board_slug=category.board.slug task_id=task.id %}"

@@ -13,6 +13,18 @@ class SnoozeForm(forms.ModelForm):
         fields = ["snoozed_till"]
 
 
+class TaskUpdateForm(forms.ModelForm):
+    is_completed = forms.BooleanField(required=False)
+
+    class Meta:
+        model = Task
+        fields = [
+            "title",
+            "description",
+            "is_completed",
+        ]
+
+
 class TaskForm(forms.ModelForm):
     title = forms.CharField(
         widget=forms.TextInput(attrs={"x-on:keydown.stop": True})
