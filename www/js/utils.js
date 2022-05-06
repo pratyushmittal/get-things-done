@@ -55,7 +55,13 @@
       post: post,
       ajaxSubmit: ajaxSubmit,
       clearSelection: clearSelection,
-      collapseSelection: collapseSelection
+      collapseSelection: collapseSelection,
+      setItemToLocal: function (key, value) {
+        localStorage.setItem(key, JSON.stringify(value))
+      },
+      getItemFromLocal: function (key) {
+        return JSON.parse(localStorage.getItem(key))
+      }
     }
   }
   setupEverything()

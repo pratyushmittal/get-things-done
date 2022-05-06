@@ -54,3 +54,10 @@ def view_board(request, slug):
     if saved_board_slug != slug:
         response.set_cookie(BOARD_COOKIE_KEY, slug)
     return response
+
+
+def serverless(request):
+    return render(
+        request,
+        "serverless.html",
+    )

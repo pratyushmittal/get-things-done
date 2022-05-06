@@ -18,9 +18,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from boards import views as boards_views
+
 urlpatterns = [
     path("", include("boards.urls", namespace="boards")),
     path("admin/", admin.site.urls),
+    path("serverless/", boards_views.serverless, name="serverless"),
 ]
 
 if settings.DEBUG:
