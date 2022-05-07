@@ -138,7 +138,7 @@
         </button>
         <div x-show="snoozeOptions.show" x-cloak class="smaller">
           <div>
-            <strong>Remind me after</strong>
+            <strong>Snooze for</strong>
           </div>
           <input type="number" style="width: 36px;" x-model="snoozeOptions.number">
           <select x-model="snoozeOptions.unit">
@@ -147,6 +147,29 @@
             <option value="weeks">Weeks</option>
           </select>
           <span class="smaller mute" x-text="formData.snoozed_till"></span>
+          <div>
+            <button
+              type="button"
+              class="small"
+              x-on:click="
+                snoozeOptions.show = false
+                submitChanges()
+              "
+            >
+              Snooze
+            </button>
+            <button
+              type="button"
+              class="small"
+              x-on:click="
+                snoozeOptions.show = false
+                formData.snoozed_till = null
+                submitChanges()
+              "
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
