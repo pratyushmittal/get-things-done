@@ -26,11 +26,38 @@
     task.focus()
   }
 
+  function getSnoozeTime (number, units) {
+    var now = new Date()
+    var number = parseInt(number)
+    switch (units) {
+      case 'minutes':
+        now.setMinutes(now.getMinutes() + number)
+        break
+      case 'hours':
+        now.setHours(now.getHours() + number)
+        break
+      case 'days':
+        now.setDate(now.getDate() + number)
+        now.setHours(8)
+        now.setMinutes(0)
+        now.setSeconds(0)
+        break
+      case 'weeks':
+        now.setDate(now.getDate() + number * 7)
+        now.setHours(8)
+        now.setMinutes(0)
+        now.setSeconds(0)
+        break
+    }
+    return now
+  }
+
   function setupEverything () {
     window.App = {
       getNextTaskId: getNextTaskId,
       getPreviousTaskId: getPreviousTaskId,
-      setFocus: setFocus
+      setFocus: setFocus,
+      getSnoozeTime: getSnoozeTime
     }
   }
   setupEverything()

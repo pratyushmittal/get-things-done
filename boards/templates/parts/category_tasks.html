@@ -69,16 +69,23 @@
       formData: {
         title: '',
         description: '',
-        is_completed: false
+        is_completed: false,
+        snoozed_till: null
       },
       submitChanges() {
         Utils.post($el.dataset.updateUrl, this.formData)
         .then(resp => resp.json())
         .then(data => formData = data)
+      },
+      snoozeOptions: {
+        show: false,
+        number: 2,
+        unit: 'days'
       }
     }"
     x-init="
       formData = JSON.parse(document.getElementById('{{ task.json_script_id }}').textContent)
+      $watch('snoozeOptions', value => formData.snoozed_till = App.getSnoozeTime(value.number, value.unit))
     "
     x-on:click="activeTaskId = $el.dataset.taskId"
     :class="{
@@ -120,11 +127,27 @@
           >
         </div>
       </div>
-      <div class="show-on-active">
-        <a
-          href="{% url 'boards:tasks:snooze' board_slug=category.board.slug task_id=task.id %}"
-          class="button small"
-        >Snooze</a>
+      <div class="show-on-active margin-left-16">
+        <button
+          class="small"
+          type="button"
+          x-on:click="snoozeOptions.show = true"
+          x-show="!snoozeOptions.show"
+        >
+          Snooze
+        </button>
+        <div x-show="snoozeOptions.show" x-cloak class="smaller">
+          <div>
+            <strong>Remind me after</strong>
+          </div>
+          <input type="number" style="width: 36px;" x-model="snoozeOptions.number">
+          <select x-model="snoozeOptions.unit">
+            <option value="hours">Hours</option>
+            <option value="days">Days</option>
+            <option value="weeks">Weeks</option>
+          </select>
+          <span class="smaller mute" x-text="formData.snoozed_till"></span>
+        </div>
       </div>
     </div>
   </li>
