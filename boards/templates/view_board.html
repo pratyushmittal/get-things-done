@@ -1,20 +1,33 @@
-{% extends 'index.html' %}
+{% extends base_template %}
 
 {% block title %}TO-DOs List{% endblock %}
 
 {% block content_area %}
-<div class="task-board">
-  <main
-    x-data="{activeTaskId: null}"
-    x-on:keydown.j.document="
-      activeTaskId = App.getNextTaskId(activeTaskId)
-      App.setFocus(activeTaskId)
-    "
-    x-on:keydown.k.document="
-      activeTaskId = App.getPreviousTaskId(activeTaskId)
-      App.setFocus(activeTaskId)
-    "
-  >
+<div
+  class="task-board"
+  data-refresh-url="{% url 'boards:view' slug=board.slug %}"
+  data-history-url="{% url 'boards:history' board_slug=board.slug %}"
+  data-search-url="{% url 'boards:search' board_slug=board.slug %}"
+  x-data="{activeTaskId: null}"
+  x-ref="board"
+  x-on:keydown.shift.c.document="
+    Utils.fetchHtml($refs.board.dataset.historyUrl)
+    .then(html => Alpine.morph($refs.board, html))
+  "
+  x-on:keydown.r.document="
+    Utils.fetchHtml($refs.board.dataset.refreshUrl)
+    .then(html => Alpine.morph($refs.board, html))
+  "
+  x-on:keydown.j.document="
+    activeTaskId = App.getNextTaskId(activeTaskId)
+    App.setFocus(activeTaskId)
+  "
+  x-on:keydown.k.document="
+    activeTaskId = App.getPreviousTaskId(activeTaskId)
+    App.setFocus(activeTaskId)
+  "
+>
+  <main>
     {% for category in board.categories %}
     {% include 'parts/category_tasks.html' with form=task_form %}
     {% endfor %}

@@ -44,28 +44,79 @@ def create_board(request):
     return redirect(board.get_absolute_url())
 
 
-def view_board(request, slug):
-    tasks = Prefetch(
+def _get_board(slug, tasks):
+    tasks_prefetch = Prefetch(
         "task_set",
-        queryset=Task.objects.filter(completed_at=None),
+        queryset=tasks,
         to_attr="tasks",
     )
     categories = Prefetch(
         "category_set",
-        queryset=Category.objects.prefetch_related(tasks),
+        queryset=Category.objects.prefetch_related(tasks_prefetch),
         to_attr="categories",
     )
     board = get_object_or_404(
         Board.objects.prefetch_related(categories),
         slug=slug,
     )
+    return board
 
-    response = render(
-        request, "view_board.html", {"board": board, "task_form": TaskForm()}
+
+def _render_board(request, board):
+    base_template = (
+        "ajax.html"
+        if request.headers.get("x-requested-with") == "XMLHttpRequest"
+        else "index.html"
     )
+    return render(
+        request,
+        "view_board.html",
+        {
+            "board": board,
+            "task_form": TaskForm(),
+            "base_template": base_template,
+        },
+    )
+
+
+def view_board(request, slug):
+    tasks = Task.objects.filter(completed_at=None)
+    board = _get_board(slug, tasks)
+    response = _render_board(request, board)
 
     # update cookie for board-slug
     saved_board_slug = request.COOKIES.get(BOARD_COOKIE_KEY)
     if saved_board_slug != slug:
         response.set_cookie(BOARD_COOKIE_KEY, slug)
     return response
+
+
+def view_history(request, board_slug):
+    tasks = Task.objects.exclude(completed_at=None)
+    board = _get_board(board_slug, tasks)
+
+    # show tasks in completed order
+    tasks = []
+    for category in board.categories:
+        tasks += category.tasks
+    tasks.sort(key=lambda x: x.completed_at, reverse=True)
+    board.categories = [{"name": "History", "tasks": tasks}]
+    return _render_board(request, board)
+
+
+def view_search(request, board_slug):
+    tasks = Task.objects.all()
+    board = _get_board(board_slug, tasks)
+
+    # filter tasks based on fuzzy search
+    q = request.GET.get("q", "")
+    tasks = []
+    for category in board.categories:
+        for task in category.tasks:
+            if q in task.title:
+                tasks.append(task)
+
+    search_category = {"name": "Search", "tasks": tasks}
+    board.categories = [search_category]
+
+    return _render_board(request, board)
