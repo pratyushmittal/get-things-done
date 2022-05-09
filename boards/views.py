@@ -63,18 +63,12 @@ def _get_board(slug, tasks):
 
 
 def _render_board(request, board):
-    base_template = (
-        "ajax.html"
-        if request.headers.get("x-requested-with") == "XMLHttpRequest"
-        else "index.html"
-    )
     return render(
         request,
         "view_board.html",
         {
             "board": board,
             "task_form": TaskForm(),
-            "base_template": base_template,
         },
     )
 

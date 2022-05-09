@@ -1,4 +1,4 @@
-{% extends base_template %}
+{% extends 'index.html' %}
 
 {% block title %}TO-DOs List{% endblock %}
 
@@ -11,12 +11,10 @@
   x-data="{activeTaskId: null}"
   x-ref="board"
   x-on:keydown.shift.c.document="
-    Utils.fetchHtml($refs.board.dataset.historyUrl)
-    .then(html => Alpine.morph($refs.board, html))
+    window.location.href = $refs.board.dataset.historyUrl
   "
   x-on:keydown.r.document="
-    Utils.fetchHtml($refs.board.dataset.refreshUrl)
-    .then(html => Alpine.morph($refs.board, html))
+    window.location.href = $refs.board.dataset.refreshUrl
   "
   x-on:keydown.j.document="
     activeTaskId = App.getNextTaskId(activeTaskId)

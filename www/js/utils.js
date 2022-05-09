@@ -31,18 +31,6 @@
     return post(form.action, data)
   }
 
-  async function fetchHtml (url) {
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'text/html',
-        'X-Requested-With': 'XMLHttpRequest'
-      }
-    }).then(function (response) {
-      return response.text()
-    })
-  }
-
   function clearSelection() {
     if(document.selection && document.selection.empty) {
         document.selection.empty()
@@ -66,7 +54,6 @@
     window.Utils = {
       post: post,
       ajaxSubmit: ajaxSubmit,
-      fetchHtml: fetchHtml,
       clearSelection: clearSelection,
       collapseSelection: collapseSelection
     }
