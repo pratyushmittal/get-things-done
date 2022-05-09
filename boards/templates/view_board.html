@@ -2,22 +2,47 @@
 
 {% block title %}TO-DOs List{% endblock %}
 
-{% block content %}
-<div
-  x-data="{activeTaskId: null}"
-  x-on:keydown.j.document="
-    activeTaskId = App.getNextTaskId(activeTaskId)
-    App.setFocus(activeTaskId)
-  "
-  x-on:keydown.k.document="
-    activeTaskId = App.getPreviousTaskId(activeTaskId)
-    App.setFocus(activeTaskId)
-  "
->
-  {% for category in board.categories %}
-  {% include 'parts/category_tasks.html' with form=task_form %}
-  {% endfor %}
+{% block content_area %}
+<div class="task-board">
+  <main
+    x-data="{activeTaskId: null}"
+    x-on:keydown.j.document="
+      activeTaskId = App.getNextTaskId(activeTaskId)
+      App.setFocus(activeTaskId)
+    "
+    x-on:keydown.k.document="
+      activeTaskId = App.getPreviousTaskId(activeTaskId)
+      App.setFocus(activeTaskId)
+    "
+  >
+    {% for category in board.categories %}
+    {% include 'parts/category_tasks.html' with form=task_form %}
+    {% endfor %}
 
-  <a class="button" href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
+    <a class="button" href="{% url 'boards:tasks:add_category' board_slug=board.slug %}">+ Add Group</a>
+  </main>
+  <nav>
+    <ul class="no-style mute font-size-14">
+      <li>
+        <button class="as-text">done N tasks today</button>
+      </li>
+      <li>
+        <button class="as-text">search - <strong>/</strong></button>
+      </li>
+      <li>
+        <button class="as-text">snooze - <strong>s</strong></button>
+      </li>
+      <li>
+        <button class="as-text">edit - <strong>enter</strong></button>
+      </li>
+      <li>
+        <button class="as-text">refresh - <strong>r</strong></button>
+      </li>
+      <li>next - <strong>j</strong></li>
+      <li>previous - <strong>j</strong></li>
+      <li>move down - <strong>shift + j</strong></li>
+      <li>move up - <strong>shift + k</strong></li>
+    </ul>
+  </nav>
 </div>
 {% endblock %}

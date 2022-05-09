@@ -14,10 +14,49 @@ body {
     font-family: "Inter", sans-serif;
     font-size: 1.8em;
     line-height: 1.45;
-    max-width: 800px;
     box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    max-width: 800px;
     padding: 30px 20px 50px;
     margin: 24px auto;
+}
+
+nav {
+    border-top: 8px solid var(--accent);
+    padding-top: 32px;
+    padding-left: 30px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+nav ul li + li {
+    margin-top: 16px;
+}
+
+@media screen and (min-width: 1000px) {
+    main {
+        flex-grow: 1;
+        margin-left: 20%;
+    }
+    nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        border-top: none;
+        border-right: 8px solid var(--accent);
+        padding-top: 120px;
+        padding-right: 32px;
+        text-align: right;
+        height: 100%;
+
+        /* show menu from bottom */
+        display: flex;
+        flex-direction: column-reverse;
+    }
 }
 
 h1,
@@ -37,6 +76,10 @@ h1,
 
 .larger {
     font-size: larger;
+}
+
+.font-size-14 {
+    font-size: 1.4rem;
 }
 
 ul.no-style {
@@ -136,7 +179,6 @@ button,
     border-radius: 6px;
     color: var(--black);
     cursor: pointer;
-    font-size: 1.4rem;
     line-height: 1;
     font-weight: 500;
     text-decoration: none;
@@ -151,6 +193,16 @@ button,
 .button.small,
 button.small {
     padding: 4px 8px;
+}
+
+button.as-text {
+    background: none;
+    border: none;
+    color: inherit;
+    font-weight: inherit;
+    font-size: 1.4rem;
+    text-decoration: none;
+    padding: 0;
 }
 
 [x-cloak] {

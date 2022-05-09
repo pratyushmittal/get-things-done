@@ -26,12 +26,11 @@
   <script src="{% static 'js/app.js' %}"></script>
 </head>
 <body>
-  {% block content %}
-  <h1>Start Building</h1>
-  <p class="mute">Build something great.</p>
-
-  <h2>Edit this page</h2>
-  <p class="mute">Edit <code>index.html</code> to edit this page.</p>
+  {% block content_area %}
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
   {% endblock %}
 </body>
 </html>
