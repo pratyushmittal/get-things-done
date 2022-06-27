@@ -10,7 +10,7 @@ curlylint
 pre-commit==2.18.1
 
 # for debugging
-django-debug-toolbar==3.2.4
+django-debug-toolbar==3.5.0
 ipdb==0.13.9
 
 # for tests
