@@ -48,8 +48,6 @@ uberspace web header set www.get-things-done.com/static gzip on
 uberspace web header set www.get-things-done.com/static gzip_comp_level 6
 uberspace web header set www.get-things-done.com/static gzip_types "text/plain text/css text/xml application/json application/javascript application/xml+rss application/atom+xml image/svg+xml"
 
-# 
-
 # instructions to setup git push
 echo "Remote setup done"
 echo "Run these on local"
