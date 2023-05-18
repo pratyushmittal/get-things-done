@@ -5,14 +5,14 @@
 set -e  # exit if anything fails
 
 echo "Installing requirements"
-pip3.9 install --upgrade pip --user
-pip3.9 install -r requirements/requirements.txt --user
+pip3.11 install --upgrade pip --user
+pip3.11 install -r requirements/requirements.txt --user
 
 echo "Collecting Static files"
-python3.9 manage.py collectstatic --noinput --settings=get_things_done.settings.production
+python3.11 manage.py collectstatic --noinput --settings=get_things_done.settings.production
 
 echo "Running migrations"
-python3.9 manage.py migrate --settings=get_things_done.settings.production
+python3.11 manage.py migrate --settings=get_things_done.settings.production
 
 echo "Restarting uwsgi"
 touch get_things_done/wsgi.py

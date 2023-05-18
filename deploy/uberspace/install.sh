@@ -17,7 +17,7 @@ ln -s /home/getdone/ENV ~/webapps/get_things_done/.env
 
 # https://lab.uberspace.de/guide_django.html
 # install uwsgi
-pip3.9 install uwsgi --user
+pip3.11 install uwsgi --user
 cp uwsgi.ini ~/etc/services.d/uwsgi.ini
 mkdir -p ~/uwsgi/apps-enabled
 touch ~/uwsgi/err.log
@@ -57,4 +57,4 @@ echo "git remote add live getdone:repos/get_things_done.git"
 echo "git push live"
 echo "ssh getdone"
 echo "vi ENV"
-echo "python3.9 manage.py createsuperuser --settings=get_things_done.settings.production"
+echo "python3.11 manage.py createsuperuser --settings=get_things_done.settings.production"

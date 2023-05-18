@@ -2,11 +2,9 @@ name: Automated Testing
 
 on: [push]
 
-
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
-
 
 jobs:
   run_tests:
@@ -25,7 +23,7 @@ jobs:
       - name: Set up Python version
         uses: actions/setup-python@v2
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Checking python version
         run: python --version
@@ -49,7 +47,6 @@ jobs:
           HOST: "127.0.0.1"
         run: mysqladmin ping -h$HOST --port $PORT -u$MYSQL_USER -p$MYSQL_PASSWORD
 
-      
       - name: Check for cache of Pipfile downloads
         id: cache-pip-downloads
         uses: actions/cache@v2
@@ -58,9 +55,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/requirements/requirements-dev.txt') }}-v3
           restore-keys: |
             ${{ runner.os }}-pip-
-      
 
-      
       - name: Check for cache of Pipfile dependencies
         id: cache-pip
         uses: actions/cache@v2
@@ -69,7 +64,6 @@ jobs:
           key: ${{ env.pythonLocation }}-${{ runner.os }}-${{ hashFiles('**/requirements/requirements-dev.txt') }}-v3
           restore-keys: |
             ${{ env.pythonLocation }}-${{ runner.os }}-pip-
-      
 
       - name: Install dependencies from requirements
         run: |

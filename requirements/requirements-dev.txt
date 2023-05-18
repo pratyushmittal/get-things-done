@@ -1,18 +1,18 @@
 -r requirements.txt
 
 # for generation of requirements
-pip-tools==6.6.0
+pip-tools
 
 # for linting
-flake8==4.0.1
-black==22.3.0
+flake8
+black
 curlylint
-pre-commit==2.18.1
+pre-commit
 
 # for debugging
-django-debug-toolbar==3.2.4
-ipdb==0.13.9
+django-debug-toolbar
+ipdb
 
 # for tests
-factory-boy==3.2.1
-time-machine==2.6.0
+factory-boy
+time-machine
